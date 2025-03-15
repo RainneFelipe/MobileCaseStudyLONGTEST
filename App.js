@@ -3,8 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
-import DashboardScreen from './src/screens/DashboardScreen'; // Import the new dashboard screen
-
+import DashboardScreen from './src/screens/DashboardScreen'; 
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -13,20 +12,19 @@ const App = () => {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
-          component={LoginScreen} // Pass the component directly
+          component={LoginScreen} 
           options={{ headerShown: false }}
         />
         <Stack.Screen 
           name="Register" 
-          component={RegistrationScreen} // Pass the component directly
+          component={RegistrationScreen} 
           options={{ headerShown: false }} 
         />
         <Stack.Screen 
           name="Dashboard" 
-          component={DashboardScreen} // Pass the component directly
+          component={DashboardScreen} 
           options={{ headerShown: false }} 
         />
-        {/* Add other screens here */}
       </Stack.Navigator>
     </NavigationContainer>
   );

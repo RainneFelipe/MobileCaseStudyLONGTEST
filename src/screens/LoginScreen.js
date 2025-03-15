@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Image, Alert } from 'react-native';
 import styles from '../styles/styles';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
-import { getRegisteredUser } from '../utils/userStore'; // Import the getter function
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getRegisteredUser } from '../utils/userStore';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({}); // State to track errors
+  const [errors, setErrors] = useState({});
 
   const handleLogin = () => {
-    const registeredUser = getRegisteredUser(); // Retrieve the registered user
+    const registeredUser = getRegisteredUser();
     const newErrors = {};
 
     if (!username) newErrors.username = true;
@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.username && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.username && { borderColor: 'red' },
             ]}
             placeholder="Enter your username"
             value={username}
@@ -56,7 +56,7 @@ const LoginScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.password && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.password && { borderColor: 'red' },
             ]}
             placeholder="Enter your password"
             secureTextEntry

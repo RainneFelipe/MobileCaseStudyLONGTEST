@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Image, Alert } from 'react-native';
 import styles from '../styles/styles';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
-import { setRegisteredUser } from '../utils/userStore'; // Import the setter function
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setRegisteredUser } from '../utils/userStore';
 
 const RegistrationScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
@@ -11,7 +11,7 @@ const RegistrationScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState({}); // State to track errors
+  const [errors, setErrors] = useState({});
 
   const handleRegister = () => {
     const newErrors = {};
@@ -42,7 +42,7 @@ const RegistrationScreen = ({ navigation }) => {
     }
 
     setErrors({});
-    setRegisteredUser({ username, password }); // Store only username and password
+    setRegisteredUser({ username, password });
     navigation.navigate('Login');
   };
 
@@ -60,7 +60,7 @@ const RegistrationScreen = ({ navigation }) => {
             style={[
               styles.input,
               { flex: 1, marginRight: 5 },
-              errors.firstName && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.firstName && { borderColor: 'red' },
             ]}
             placeholder="First Name"
             value={firstName}
@@ -70,7 +70,7 @@ const RegistrationScreen = ({ navigation }) => {
             style={[
               styles.input,
               { flex: 1, marginLeft: 5 },
-              errors.lastName && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.lastName && { borderColor: 'red' },
             ]}
             placeholder="Last Name"
             value={lastName}
@@ -81,7 +81,7 @@ const RegistrationScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.email && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.email && { borderColor: 'red' },
             ]}
             placeholder="Enter your email"
             value={email}
@@ -93,7 +93,7 @@ const RegistrationScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.username && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.username && { borderColor: 'red' },
             ]}
             placeholder="Enter your username"
             value={username}
@@ -107,7 +107,7 @@ const RegistrationScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.password && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.password && { borderColor: 'red' },
               password !== confirmPassword && { borderColor: 'red' },
             ]}
             placeholder="Enter your password"
@@ -120,7 +120,7 @@ const RegistrationScreen = ({ navigation }) => {
           <TextInput
             style={[
               styles.input,
-              errors.confirmPassword && { borderColor: 'red' }, // Highlight only if there's an error
+              errors.confirmPassword && { borderColor: 'red' },
               password !== confirmPassword && { borderColor: 'red' },
             ]}
             placeholder="Re-enter your password"

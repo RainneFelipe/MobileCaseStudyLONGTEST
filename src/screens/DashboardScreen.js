@@ -6,6 +6,9 @@ const DashboardScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.dashboardHeader}>
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <Image source={require('../assets/menu-icon.png')} style={styles.menuIcon} />
+        </TouchableOpacity>
         <Text style={styles.dashboardTitle}>GTBA Portal</Text>
         <Image source={require('../assets/logo.png')} style={styles.dashboardLogo} />
       </View>

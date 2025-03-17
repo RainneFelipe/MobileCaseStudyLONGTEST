@@ -157,4 +157,37 @@ export default StyleSheet.create({
     fontSize: 12,
     marginTop: 5,
   },
+  drawerHeader: {
+    padding: 20,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  drawerProfileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginBottom: 10,
+  },
+  drawerProfileName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  drawerProfileRole: {
+    fontSize: 14,
+    color: '#777',
+  },
+  drawerIcon: {
+    width: 20,
+    height: 20,
+    marginRight: -20,
+  },
+  drawerLogoutLabel: {
+    color: 'red',
+  },
+  menuIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
+  },
 });

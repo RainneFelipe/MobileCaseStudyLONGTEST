@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -156,5 +156,45 @@ export default StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginTop: 5,
+  },
+  gradesTitle: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 20,
+    color: '#fff',
+  },
+  gradeCard: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    width: Dimensions.get('window').width - 40,
+    alignSelf: 'center',
+  },
+  gradeRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  gradeCell: {
+    flex: 1,
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  gradeHeader: {
+    fontWeight: 'bold',
+    color: '#555',
+  },
+  gradesList: {
+    paddingHorizontal: 10,
+    paddingBottom: 20,
   },
 });

@@ -35,17 +35,29 @@ const DashboardScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.dashboardButtons}>
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+            style={styles.dashboardCard}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('ViewGrades')} // Ensure 'ViewGrades' is registered in the navigation stack
+          >
             <Text style={styles.dashboardCardTitle}>View Grades</Text>
             <Text style={styles.dashboardCardText}>Check your academic performance and progress.</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+            style={styles.dashboardCard}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('ManageCourses')}
+            >
             <Text style={styles.dashboardCardTitle}>Manage Courses</Text>
-            <Text style={styles.dashboardCardText}>Enroll in courses and access learning materials.</Text>
+            <Text style={styles.dashboardCardText}>Enroll in courses and view your tentative schedule</Text>
           </TouchableOpacity>
         </View>
         <View style={[styles.dashboardButtons, { marginTop: 20 }]}>
-          <TouchableOpacity style={styles.dashboardCard}>
+          <TouchableOpacity 
+            style={styles.dashboardCard}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('UpdateProfile')}
+          >
             <Text style={styles.dashboardCardTitle}>Update Profile</Text>
             <Text style={styles.dashboardCardText}>Keep your personal information up-to-date.</Text>
           </TouchableOpacity>

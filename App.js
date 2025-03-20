@@ -4,6 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import DashboardScreen from './src/screens/DashboardScreen'; 
+import ViewGrades from './src/screens/ViewGrades';
+import UpdateProfile from './src/screens/UpdateProfile';
+import ManageCourses from './src/screens/ManageCourses';
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -23,6 +27,21 @@ const App = () => {
         <Stack.Screen 
           name="Dashboard" 
           component={DashboardScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="ViewGrades" 
+          component={ViewGrades} 
+          options={{ headerShown: false }} // Remove the header
+        />
+        <Stack.Screen 
+          name="UpdateProfile" 
+          component={UpdateProfile} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="ManageCourses" 
+          component={ManageCourses} 
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>

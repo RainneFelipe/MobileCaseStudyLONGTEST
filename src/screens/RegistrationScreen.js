@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Image, Alert } from 'react-native';
 import styles from '../styles/styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setRegisteredUser } from '../utils/userStore';
+import { storeCredentials } from '../components/UserCredentials';
 
 const RegistrationScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
@@ -80,7 +79,7 @@ const RegistrationScreen = ({ navigation }) => {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const newErrors = {};
     if (!firstName) newErrors.firstName = true;
     if (!lastName) newErrors.lastName = true;
@@ -111,9 +110,20 @@ const RegistrationScreen = ({ navigation }) => {
       return;
     }
 
-    setErrors({});
-    setRegisteredUser({ username, password });
-    navigation.navigate('Login');
+    const success = await storeCredentials({ 
+      username, 
+      password,
+      firstName,
+      lastName,
+      email 
+    });
+
+    if (success) {
+      setErrors({});
+      navigation.navigate('Login');
+    } else {
+      setErrors({ registration: 'Failed to register. Please try again.' });
+    }
   };
 
   return (

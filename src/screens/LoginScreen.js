@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Image, Alert } from 'react-native';
 import styles from '../styles/styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getRegisteredUser } from '../utils/userStore';
+import { getCredentials } from '../components/UserCredentials';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleLogin = () => {
-    const registeredUser = getRegisteredUser();
+  const handleLogin = async () => {
     const newErrors = {};
 
     if (!username) newErrors.username = 'Username is required';
@@ -24,12 +22,12 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    if (
-      registeredUser &&
-      (username !== registeredUser.username || password !== registeredUser.password)
-    ) {
-      newErrors.credentials = 'Invalid username or password.';
-      setErrors(newErrors);
+    const storedCredentials = await getCredentials();
+    
+    if (!storedCredentials || 
+        username !== storedCredentials.username || 
+        password !== storedCredentials.password) {
+      setErrors({ credentials: 'Invalid username or password.' });
       return;
     }
 

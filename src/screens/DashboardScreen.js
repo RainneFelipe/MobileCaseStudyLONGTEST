@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, Image, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableWithoutFeedback, Animated, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 import styles from '../styles/styles';
 import AddUserIcon from '../assets/adduser.png';
 import UploadIcon from '../assets/upload.png';
@@ -7,37 +9,42 @@ import GradesIcon from '../assets/graduationhat.png';
 import CoursesIcon from '../assets/book.png';
 import ScheduleIcon from '../assets/calendar.png';
 import FormsIcon from '../assets/file.png';
-// Sidebar Icons
-import ProfileIcon from '../assets/profile.png';
-import HomeIcon from '../assets/home.png';
-import UploadIconGray from '../assets/upload-gray.png';
-import DocumentsIcon from '../assets/documents.png';
-import GradesIconGray from '../assets/graduationhat-gray.png';
-import DashboardIcon from '../assets/dashboard.png';
-import NotificationsIcon from '../assets/notifications.png';
-import AnalyticsIcon from '../assets/analytics.png';
-import LikesIcon from '../assets/likes.png';
-import WalletIcon from '../assets/wallet.png';
-import LogoutIcon from '../assets/logout.png';
 
 const DashboardScreen = ({ navigation }) => {
   const [isSidebarActive, setSidebarActive] = useState(false);
-  const sidebarAnimation = useRef(new Animated.Value(-250)).current; // Update initial value
+  const sidebarAnimation = useRef(new Animated.Value(-250)).current;
+  const overlayAnimation = useRef(new Animated.Value(0)).current;
 
   const toggleSidebar = () => {
     if (isSidebarActive) {
-      Animated.timing(sidebarAnimation, {
-        toValue: -250, // Match sidebar width
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => setSidebarActive(false));
+      Animated.parallel([
+        Animated.timing(sidebarAnimation, {
+          toValue: -250,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(overlayAnimation, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setSidebarActive(false);
+      });
     } else {
       setSidebarActive(true);
-      Animated.timing(sidebarAnimation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
+      Animated.parallel([
+        Animated.timing(sidebarAnimation, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(overlayAnimation, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
   };
 
@@ -50,64 +57,13 @@ const DashboardScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={closeSidebar}>
       <SafeAreaView style={[styles.container, { backgroundColor: '#f0f0f0' }]}>
-        <View style={styles.dashboardHeader}>
-          <TouchableOpacity onPress={toggleSidebar} style={localStyles.hamburgerMenu}>
-            <Text style={localStyles.hamburgerText}>☰</Text>
-          </TouchableOpacity>
-          <Text style={styles.dashboardTitle}>Golden Treasure Baptist Academy</Text>
-          <Image source={require('../assets/logo.png')} style={styles.dashboardLogo} />
-        </View>
-        <Animated.View style={[localStyles.sidebar, { left: sidebarAnimation }]}>
-          <View style={localStyles.sidebarHeader}>
-            <Image source={ProfileIcon} style={localStyles.profileIcon} />
-            <View>
-              <Text style={localStyles.profileName}>Student Name</Text>
-              <Text style={localStyles.profileRole}>Student</Text>
-            </View>
-          </View>
-          <View style={localStyles.sidebarLinks}>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={HomeIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={UploadIconGray} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Upload Documents</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={DocumentsIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>My Documents</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={GradesIconGray} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Student Application Form</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={DashboardIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Dashboard</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={NotificationsIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Notifications</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={AnalyticsIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Analytics</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={LikesIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Likes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={localStyles.sidebarLink}>
-              <Image source={WalletIcon} style={localStyles.sidebarIcon} />
-              <Text style={localStyles.sidebarText}>Wallets</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={localStyles.logoutLink}>
-            <Image source={LogoutIcon} style={localStyles.sidebarIcon} />
-            <Text style={localStyles.logoutText}>Logout</Text>
-          </TouchableOpacity>
-        </Animated.View>
+        <Header toggleSidebar={toggleSidebar} />
+        <Sidebar
+          sidebarAnimation={sidebarAnimation}
+          overlayAnimation={overlayAnimation}
+          isSidebarActive={isSidebarActive}
+          closeSidebar={closeSidebar}
+        />
         <ScrollView contentContainerStyle={styles.dashboardContainer}>
           <View style={localStyles.dailyVerseCard}>
             <Text style={localStyles.dailyVerseTitle}>📖 Daily Verse</Text>

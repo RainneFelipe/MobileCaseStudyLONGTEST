@@ -14,7 +14,10 @@ const LoginScreen = ({ navigation }) => {
     const newErrors = {};
 
     if (!username) newErrors.username = 'Username is required';
+    else if (username.length < 5) newErrors.username = 'Username must be at least 5 characters';
+    
     if (!password) newErrors.password = 'Password is required';
+    else if (password.length < 5) newErrors.password = 'Password must be at least 5 characters';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);

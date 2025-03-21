@@ -1,12 +1,44 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Image, Pressable } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Image, Pressable, Animated } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import GradesIcon from '../assets/graduationhat.png';
-// ...existing imports...
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 
 const StudentApplication = () => {
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
+  const sidebarAnimation = useRef(new Animated.Value(-250)).current;
+  const overlayAnimation = useRef(new Animated.Value(0)).current;
+
+  const toggleSidebar = () => {
+    const toValue = isSidebarActive ? -250 : 0;
+    const overlayToValue = isSidebarActive ? 0 : 1;
+    
+    Animated.parallel([
+      Animated.timing(sidebarAnimation, {
+        toValue,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(overlayAnimation, {
+        toValue: overlayToValue,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+    
+    setIsSidebarActive(!isSidebarActive);
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: '#f0f0f0' }]}>
+      <Header toggleSidebar={toggleSidebar} />
+      <Sidebar 
+        sidebarAnimation={sidebarAnimation}
+        overlayAnimation={overlayAnimation}
+        isSidebarActive={isSidebarActive}
+        closeSidebar={() => toggleSidebar()}
+      />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.parentCard}>
           <View style={styles.parentCardHeader}>

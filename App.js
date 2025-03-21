@@ -7,6 +7,8 @@ import DashboardScreen from './src/screens/DashboardScreen';
 import ViewGrades from './src/screens/ViewGrades';
 import UpdateProfile from './src/screens/UpdateProfile';
 import ManageCourses from './src/screens/ManageCourses';
+import StudentApplication from './src/screens/StudentApplication';
+import UploadDocuments from './src/screens/UploadDocuments';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +44,16 @@ const App = () => {
         <Stack.Screen 
           name="ManageCourses" 
           component={ManageCourses} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="StudentApplication" 
+          component={StudentApplication} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="UploadDocuments" 
+          component={UploadDocuments} 
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>

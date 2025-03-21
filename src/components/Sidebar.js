@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, Animated, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import ProfileIcon from '../assets/profile.png';
 import HomeIcon from '../assets/home.png';
 import UploadIconGray from '../assets/upload-gray.png';
@@ -13,6 +14,8 @@ import WalletIcon from '../assets/wallet.png';
 import LogoutIcon from '../assets/logout.png';
 
 const Sidebar = ({ sidebarAnimation, overlayAnimation, isSidebarActive, closeSidebar }) => {
+  const navigation = useNavigation();
+  
   return (
     <>
       <Animated.View 
@@ -39,11 +42,11 @@ const Sidebar = ({ sidebarAnimation, overlayAnimation, isSidebarActive, closeSid
           </View>
         </View>
         <View style={styles.sidebarLinks}>
-            <TouchableOpacity style={styles.sidebarLink}>
+            <TouchableOpacity style={styles.sidebarLink} onPress={() => navigation.navigate('Dashboard')}>
               <Image source={HomeIcon} style={styles.sidebarIcon} />
               <Text style={styles.sidebarText}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sidebarLink}>
+            <TouchableOpacity style={styles.sidebarLink} onPress={() => navigation.navigate('UploadDocuments')}>
               <Image source={UploadIconGray} style={styles.sidebarIcon} />
               <Text style={styles.sidebarText}>Upload Documents</Text>
             </TouchableOpacity>
@@ -51,8 +54,8 @@ const Sidebar = ({ sidebarAnimation, overlayAnimation, isSidebarActive, closeSid
               <Image source={DocumentsIcon} style={styles.sidebarIcon} />
               <Text style={styles.sidebarText}>My Documents</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sidebarLink}>
-              <Image source={GradesIconGray} style={styles.sidebarIcon} />
+            <TouchableOpacity style={styles.sidebarLink} onPress={() => navigation.navigate('StudentApplication')}>
+              <Image source={GradesIconGray} style={styles.sidebarIcon}/>
               <Text style={styles.sidebarText}>Student Application Form</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.sidebarLink}>
@@ -76,7 +79,7 @@ const Sidebar = ({ sidebarAnimation, overlayAnimation, isSidebarActive, closeSid
               <Text style={styles.sidebarText}>Wallets</Text>
             </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.logoutLink}>
+        <TouchableOpacity style={styles.logoutLink} onPress={() => navigation.navigate('Login')}>
           <Image source={LogoutIcon} style={styles.sidebarIcon} />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>

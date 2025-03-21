@@ -13,39 +13,69 @@ const RegistrationScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateUsername = (username) => {
+    return username.length >= 5;
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 5;
+  };
+
   const handleInputChange = (field, value) => {
     // Clear error for the field being changed
     setErrors(prev => ({ ...prev, [field]: null, emptyFields: null }));
 
-    // Update the corresponding state
+    // Update the corresponding state and validate
     switch (field) {
       case 'firstName':
         setFirstName(value);
+        if (value.trim() === '') {
+          setErrors(prev => ({ ...prev, firstName: 'First name is required' }));
+        }
         break;
       case 'lastName':
         setLastName(value);
+        if (value.trim() === '') {
+          setErrors(prev => ({ ...prev, lastName: 'Last name is required' }));
+        }
         break;
       case 'email':
         setEmail(value);
+        if (!validateEmail(value)) {
+          setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
+        }
         break;
       case 'username':
         setUsername(value);
+        if (!validateUsername(value)) {
+          setErrors(prev => ({ ...prev, username: 'Username must be at least 5 characters long' }));
+        }
         break;
       case 'password':
         setPassword(value);
-        if (confirmPassword) {
+        if (!validatePassword(value)) {
+          setErrors(prev => ({ ...prev, password: 'Password must be at least 5 characters long' }));
+        }
+        if (confirmPassword && value !== confirmPassword) {
           setErrors(prev => ({
             ...prev,
-            confirmPassword: value !== confirmPassword ? 'Passwords do not match.' : null
+            confirmPassword: 'Passwords do not match'
           }));
         }
         break;
       case 'confirmPassword':
         setConfirmPassword(value);
-        setErrors(prev => ({
-          ...prev,
-          confirmPassword: value !== password ? 'Passwords do not match.' : null
-        }));
+        if (value !== password) {
+          setErrors(prev => ({
+            ...prev,
+            confirmPassword: 'Passwords do not match'
+          }));
+        }
         break;
     }
   };
@@ -155,6 +185,7 @@ const RegistrationScreen = ({ navigation }) => {
             value={password}
             onChangeText={(text) => handleInputChange('password', text)}
           />
+          {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
         </View>
         <View style={styles.inputGroup}>
           <TextInput

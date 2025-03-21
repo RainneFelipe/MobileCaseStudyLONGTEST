@@ -3,15 +3,16 @@ import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, Image, StyleShe
 import styles from '../styles/styles';
 import AddUserIcon from '../assets/adduser.png';
 import UploadIcon from '../assets/upload.png';
-import UploadIconGray from '../assets/upload-gray.png';
 import GradesIcon from '../assets/graduationhat.png';
-import GradesIconGray from '../assets/graduationhat-gray.png';
 import CoursesIcon from '../assets/book.png';
 import ScheduleIcon from '../assets/calendar.png';
 import FormsIcon from '../assets/file.png';
-import ProfileIcon from '../assets/profile.png'; // Replace with the actual profile icon path
+// Sidebar Icons
+import ProfileIcon from '../assets/profile.png';
 import HomeIcon from '../assets/home.png';
+import UploadIconGray from '../assets/upload-gray.png';
 import DocumentsIcon from '../assets/documents.png';
+import GradesIconGray from '../assets/graduationhat-gray.png';
 import DashboardIcon from '../assets/dashboard.png';
 import NotificationsIcon from '../assets/notifications.png';
 import AnalyticsIcon from '../assets/analytics.png';

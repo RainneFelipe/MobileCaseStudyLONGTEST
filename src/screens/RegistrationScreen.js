@@ -13,6 +13,43 @@ const RegistrationScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  const handleInputChange = (field, value) => {
+    // Clear error for the field being changed
+    setErrors(prev => ({ ...prev, [field]: null, emptyFields: null }));
+
+    // Update the corresponding state
+    switch (field) {
+      case 'firstName':
+        setFirstName(value);
+        break;
+      case 'lastName':
+        setLastName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'username':
+        setUsername(value);
+        break;
+      case 'password':
+        setPassword(value);
+        if (confirmPassword) {
+          setErrors(prev => ({
+            ...prev,
+            confirmPassword: value !== confirmPassword ? 'Passwords do not match.' : null
+          }));
+        }
+        break;
+      case 'confirmPassword':
+        setConfirmPassword(value);
+        setErrors(prev => ({
+          ...prev,
+          confirmPassword: value !== password ? 'Passwords do not match.' : null
+        }));
+        break;
+    }
+  };
+
   const handleRegister = () => {
     const newErrors = {};
     if (!firstName) newErrors.firstName = true;
@@ -26,7 +63,10 @@ const RegistrationScreen = ({ navigation }) => {
       newErrors.emptyFields = 'Fields cannot be empty.';
     }
     if (username.length <= 3) {
-      newErrors.username = 'Username must be more than 3 letters.';
+      newErrors.username = 'Username must be at least 5 characters long.';
+    }
+    if (password.length <= 3) {
+      newErrors.password = 'Password must be at least 5 characters long.';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -64,7 +104,7 @@ const RegistrationScreen = ({ navigation }) => {
             ]}
             placeholder="First Name"
             value={firstName}
-            onChangeText={setFirstName}
+            onChangeText={(text) => handleInputChange('firstName', text)}
           />
           <TextInput
             style={[
@@ -74,7 +114,7 @@ const RegistrationScreen = ({ navigation }) => {
             ]}
             placeholder="Last Name"
             value={lastName}
-            onChangeText={setLastName}
+            onChangeText={(text) => handleInputChange('lastName', text)}
           />
         </View>
         <View style={styles.inputGroup}>
@@ -85,7 +125,7 @@ const RegistrationScreen = ({ navigation }) => {
             ]}
             placeholder="Enter your email"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => handleInputChange('email', text)}
           />
           {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
         </View>
@@ -97,7 +137,7 @@ const RegistrationScreen = ({ navigation }) => {
             ]}
             placeholder="Enter your username"
             value={username}
-            onChangeText={setUsername}
+            onChangeText={(text) => handleInputChange('username', text)}
           />
           {errors.username && (
             <Text style={styles.errorText}>{errors.username}</Text>
@@ -113,7 +153,7 @@ const RegistrationScreen = ({ navigation }) => {
             placeholder="Enter your password"
             secureTextEntry
             value={password}
-            onChangeText={setPassword}
+            onChangeText={(text) => handleInputChange('password', text)}
           />
         </View>
         <View style={styles.inputGroup}>
@@ -126,7 +166,7 @@ const RegistrationScreen = ({ navigation }) => {
             placeholder="Re-enter your password"
             secureTextEntry
             value={confirmPassword}
-            onChangeText={setConfirmPassword}
+            onChangeText={(text) => handleInputChange('confirmPassword', text)}
           />
           {errors.confirmPassword && (
             <Text style={styles.errorText}>{errors.confirmPassword}</Text>

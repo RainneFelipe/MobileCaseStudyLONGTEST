@@ -13,11 +13,10 @@ const LoginScreen = ({ navigation }) => {
     const registeredUser = getRegisteredUser();
     const newErrors = {};
 
-    if (!username) newErrors.username = true;
-    if (!password) newErrors.password = true;
+    if (!username) newErrors.username = 'Username is required';
+    if (!password) newErrors.password = 'Password is required';
 
     if (Object.keys(newErrors).length > 0) {
-      newErrors.general = 'All fields are required.';
       setErrors(newErrors);
       return;
     }
@@ -40,7 +39,6 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.loginContainer}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Golden Treasure Baptist Academy</Text>
-        {errors.general && <Text style={styles.errorText}>{errors.general}</Text>}
         <View style={styles.inputGroup}>
           <TextInput
             style={[
@@ -51,6 +49,9 @@ const LoginScreen = ({ navigation }) => {
             value={username}
             onChangeText={setUsername}
           />
+          {errors.username && (
+            <Text style={styles.errorText}>{errors.username}</Text>
+          )}
         </View>
         <View style={styles.inputGroup}>
           <TextInput
@@ -63,6 +64,9 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={setPassword}
           />
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
         </View>
         {errors.credentials && (
           <Text style={styles.errorText}>{errors.credentials}</Text>
